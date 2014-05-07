@@ -2,6 +2,52 @@
 	<head>
 		<title>Campfire</title>
 		<style>html, body { width: 100%; height: 100%; margin: 0 0 0 0;} canvas { width: 100%; height: 100% }</style>
+		
+		<script id="shader-fs" type="x-shader/x-fragment">
+            #ifdef GL_ES
+			precision highp float;
+			#endif
+			uniform float alpha;
+			varying vec2 vUv;      
+
+			void main(void)
+			{
+			    vec2 position = vUv;
+
+			    float red = 0.5 * (vUv.x -1.0);
+			    float green = 0.25 * (vUv.x -1.0);
+			    float blue = 0.0;
+			    green *= abs(vUv.y)/200.0;
+				red *= abs(vUv.y)/200.0;
+
+			    vec3 rgb = vec3(red, green, blue);
+				vec4 color = vec4(rgb, alpha);
+
+			    gl_FragColor = color;
+
+			}
+        </script>
+
+        <script id="shader-vs" type="x-shader/x-vertex">
+			varying vec2 vUv;
+			uniform float scale;
+			uniform float alpha;
+
+			attribute float rand;  
+			void main()
+
+			{
+			    vec3 p = position;
+			    p.x *= rand;
+			    p.z *= rand;
+			    vUv.x = rand;
+			    vUv.y = p.y;
+			    vec4 mvPosition = modelViewMatrix * vec4(scale * p, 1.0 );
+			    gl_Position = projectionMatrix * mvPosition;
+
+			}
+        </script>
+
 	</head>
 	<body>
 		<script src="js/three.js"></script>

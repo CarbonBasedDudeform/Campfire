@@ -89,6 +89,35 @@ function ParticleSystems(scene) {
 	// Add the emitter to the group.
 	particleGroup.addEmitter( smoke_particleEmitter );
 
+
+	var hotash_particleGroup = new SPE.Group({
+    // Give the particles in this group a texture
+    texture: THREE.ImageUtils.loadTexture('smokeparticle.png'),
+
+    // How long should the particles live for? Measured in seconds.
+    maxAge: 5
+	});
+
+	// Create a single emitter
+	var hotash_particleEmitter = new SPE.Emitter({
+	    type: 'cube',
+	    position: new THREE.Vector3(0, -7, 0),
+	    positionSpread: new THREE.Vector3(Math.random()*(180-50)+50,Math.random()*2,Math.random()*(180-50)+50),
+	    acceleration: new THREE.Vector3(-1, -1, -1),
+	    accelerationSpread: new THREE.Vector3(Math.random()*5, 0, Math.random()*5),
+	    velocity: new THREE.Vector3(1, 0, 1),
+	    particlesPerSecond: 100,
+	    sizeStart: 10,
+	    sizeEnd: 0,
+	    opacityStart: 1,
+	    opacityEnd: 0,
+	    colorStart: new THREE.Color('#ff0000'),
+	    colorEnd: new THREE.Color('#000000')
+	});
+
+	// Add the emitter to the group.
+	particleGroup.addEmitter( hotash_particleEmitter );
+
 	// Add the particle group to the scene so it can be drawn.
 	scene.add( particleGroup.mesh );
 
