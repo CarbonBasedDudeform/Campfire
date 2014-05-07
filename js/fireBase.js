@@ -1,8 +1,8 @@
 function fireBase(scene)
 {
-	vertShader = document.getElementById('shader-vs').innerHTML;
+	vertShader = document.getElementById('fb-vs').innerHTML;
 
-	fragShader = document.getElementById('shader-fs').innerHTML;
+	fragShader = document.getElementById('fb-fs').innerHTML;
 
 	attributes = { 
 		rand: {

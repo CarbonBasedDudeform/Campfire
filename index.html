@@ -3,7 +3,7 @@
 		<title>Campfire</title>
 		<style>html, body { width: 100%; height: 100%; margin: 0 0 0 0;} canvas { width: 100%; height: 100% }</style>
 		
-		<script id="shader-fs" type="x-shader/x-fragment">
+		<script id="fb-fs" type="x-shader/x-fragment">
             #ifdef GL_ES
 			precision highp float;
 			#endif
@@ -28,7 +28,7 @@
 			}
         </script>
 
-        <script id="shader-vs" type="x-shader/x-vertex">
+        <script id="fb-vs" type="x-shader/x-vertex">
 			varying vec2 vUv;
 			uniform float scale;
 			uniform float alpha;
@@ -48,6 +48,49 @@
 			}
         </script>
 
+        <script id="ground-fs" type="x-shader/x-fragment">
+            #ifdef GL_ES
+			precision highp float;
+			#endif
+			uniform float alpha;
+			varying vec2 vUv;      
+
+			void main(void)
+			{
+			    vec2 position = vUv;
+
+			    float red = 0.0 * (vUv.x -1.0);
+			    float green = 0.8;// * (vUv.x -1.0);
+			    float blue = 0.0;
+			    green *= abs(vUv.y)/200.0;
+				red *= abs(vUv.y)/200.0;
+
+			    vec3 rgb = vec3(red, green, blue);
+				vec4 color = vec4(rgb, alpha);
+
+			    gl_FragColor = color;
+
+			}
+        </script>
+
+        <script id="ground-vs" type="x-shader/x-vertex">
+			varying vec2 vUv;
+			uniform float scale;
+			uniform float alpha;
+
+			attribute float rand;  
+			void main()
+
+			{
+			    vec3 p = position;
+			    vUv.x = rand;
+			    vUv.y = p.y;
+			    vec4 mvPosition = modelViewMatrix * vec4(scale * p, 1.0 );
+			    gl_Position = projectionMatrix * mvPosition;
+
+			}
+        </script>
+
 	</head>
 	<body>
 		<script src="js/three.js"></script>
@@ -57,10 +100,11 @@
 		<script src="js/Fire.js"></script>
 		<script src="js/Skybox.js"></script>
 		<script src="js/fireBase.js"></script>
+		<script src="js/Ground.js"></script>
 		<script>
 			var dt = 0;
 			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 );
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000000 );
 			var mouseX = 0, mouseY = 0, halfWinX = window.innerWidth / 2; halfWinY = window.innerHeight / 2;
 			var renderer = new THREE.WebGLRenderer();
 			var	clock = new THREE.Clock();
@@ -68,12 +112,15 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+			document.addEventListener( 'wheel', onDocumentMouseWheel, false);
 
 			var sky = new Skybox(scene);
+			var ground = new Ground(scene);
 			var base = new fireBase(scene);
 			var ParticleSystems = new ParticleSystems(scene);
 
-			camera.position.z = 200;
+			var ZOOM = 2000;
+			camera.position.z = ZOOM;
 
 
 			function onDocumentMouseMove( event ) {
@@ -82,11 +129,22 @@
 				mouseY = event.clientY - halfWinY;
 			}
 
+			function onDocumentMouseWheel( event ){
+				if (event.deltaY < 0)
+				{
+					ZOOM *= 0.95;
+				} else 
+				{
+					ZOOM *= 1.05;
+				}
+			} 
 
 			function render() {
 				ParticleSystems.update();
-				camera.position.x += ( mouseX - camera.position.x ) * .5;
-				camera.position.y += ( - mouseY - camera.position.y ) * .5;
+				camera.position.x += ( mouseX - camera.position.x ) * .05;
+				camera.position.y += ( - mouseY - camera.position.y ) * .05;
+				if (camera.position.y < 0) camera.position.y = 0;
+				camera.position.z = ZOOM;
 				camera.lookAt( scene.position );
 
 				requestAnimationFrame(render);

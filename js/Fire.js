@@ -1,7 +1,8 @@
 function ParticleSystems(scene) {
+	var pstex = THREE.ImageUtils.loadTexture('smokeparticle.png');
 	var particleGroup = new SPE.Group({
     // Give the particles in this group a texture
-    texture: THREE.ImageUtils.loadTexture('smokeparticle.png'),
+    texture: pstex,
 
     // How long should the particles live for? Measured in seconds.
     maxAge: 5
@@ -33,7 +34,7 @@ function ParticleSystems(scene) {
 
 	var inner_particleGroup = new SPE.Group({
     // Give the particles in this group a texture
-    texture: THREE.ImageUtils.loadTexture('smokeparticle.png'),
+    texture: pstex,
 
     // How long should the particles live for? Measured in seconds.
     maxAge: 5
@@ -63,7 +64,7 @@ function ParticleSystems(scene) {
 
 		var smoke_particleGroup = new SPE.Group({
     // Give the particles in this group a texture
-    texture: THREE.ImageUtils.loadTexture('smokeparticle.png'),
+    texture: pstex,
 
     // How long should the particles live for? Measured in seconds.
     maxAge: 5
@@ -92,7 +93,7 @@ function ParticleSystems(scene) {
 
 	var hotash_particleGroup = new SPE.Group({
     // Give the particles in this group a texture
-    texture: THREE.ImageUtils.loadTexture('smokeparticle.png'),
+    texture: pstex,
 
     // How long should the particles live for? Measured in seconds.
     maxAge: 5
