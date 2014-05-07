@@ -75,7 +75,7 @@ function ParticleSystems(scene) {
 	    position: new THREE.Vector3(0, 200, 0),
 	    positionSpread: new THREE.Vector3(Math.random()*100,Math.random()*100,Math.random()*100),
 	    acceleration: new THREE.Vector3(0, 100, 0),
-	    accelerationSpread: new THREE.Vector3(Math.random()*300, 0, Math.random()*30),
+	    accelerationSpread: new THREE.Vector3(Math.random()*30, 0, Math.random()*30),
 	    velocity: new THREE.Vector3(0, 15, 0),
 	    particlesPerSecond: 2000,
 	    sizeStart: 200,
