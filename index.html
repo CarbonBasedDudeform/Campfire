@@ -10,6 +10,7 @@
 		<script type="text/javascript" src="js/ShaderParticleGroup.js"></script>
 		<script src="js/Fire.js"></script>
 		<script src="js/Skybox.js"></script>
+		<script src="js/fireBase.js"></script>
 		<script>
 			var dt = 0;
 			var scene = new THREE.Scene();
@@ -23,9 +24,10 @@
 			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
 			var sky = new Skybox(scene);
+			var base = new fireBase(scene);
 			var ParticleSystems = new ParticleSystems(scene);
 
-			camera.position.z = 100;
+			camera.position.z = 200;
 
 
 			function onDocumentMouseMove( event ) {
