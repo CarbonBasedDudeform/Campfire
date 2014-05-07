@@ -2,7 +2,7 @@ function Skybox(scene)
 {
 	var skyTexture = new THREE.ImageUtils.loadTexture( 'img/skybox.jpg' );
 	var geometry = new THREE.PlaneGeometry( 1000000, 1000000 );
-	var gmaterial = new THREE.MeshBasicMaterial( {map: skyTexture, side: THREE.DoubleSide} );
+	var gmaterial = new THREE.MeshLambertMaterial( {map: skyTexture, side: THREE.DoubleSide} );
 	var planezy = new THREE.Mesh( geometry, gmaterial );
 	planezy.position.z = -500000;
 	planezy.position.y = 500000;

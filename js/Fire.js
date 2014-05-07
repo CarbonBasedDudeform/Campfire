@@ -1,11 +1,8 @@
 function ParticleSystems(scene) {
 	var pstex = THREE.ImageUtils.loadTexture('smokeparticle.png');
 	var particleGroup = new SPE.Group({
-    // Give the particles in this group a texture
-    texture: pstex,
-
-    // How long should the particles live for? Measured in seconds.
-    maxAge: 5
+	    texture: pstex,
+	    maxAge: 5
 	});
 
 	// Create a single emitter
@@ -29,15 +26,9 @@ function ParticleSystems(scene) {
 	// Add the emitter to the group.
 	particleGroup.addEmitter( particleEmitter );
 
-	// Add the particle group to the scene so it can be drawn.
-	
-
 	var inner_particleGroup = new SPE.Group({
-    // Give the particles in this group a texture
-    texture: pstex,
-
-    // How long should the particles live for? Measured in seconds.
-    maxAge: 5
+	    texture: pstex,
+	    maxAge: 5
 	});
 
 	// Create a single emitter
@@ -60,14 +51,9 @@ function ParticleSystems(scene) {
 	// Add the emitter to the group.
 	particleGroup.addEmitter( inner_particleEmitter );
 
-	// Add the particle group to the scene so it can be drawn.
-
-		var smoke_particleGroup = new SPE.Group({
-    // Give the particles in this group a texture
-    texture: pstex,
-
-    // How long should the particles live for? Measured in seconds.
-    maxAge: 5
+	var smoke_particleGroup = new SPE.Group({
+	    texture: pstex,
+	    maxAge: 40
 	});
 
 	// Create a single emitter
@@ -92,11 +78,8 @@ function ParticleSystems(scene) {
 
 
 	var hotash_particleGroup = new SPE.Group({
-    // Give the particles in this group a texture
-    texture: pstex,
-
-    // How long should the particles live for? Measured in seconds.
-    maxAge: 5
+	    texture: pstex,
+	    maxAge: 5
 	});
 
 	// Create a single emitter
