@@ -9,10 +9,11 @@
 		<script type="text/javascript" src="js/ShaderParticleEmitter.js"></script>
 		<script type="text/javascript" src="js/ShaderParticleGroup.js"></script>
 		<script src="js/Fire.js"></script>
+		<script src="js/Skybox.js"></script>
 		<script>
 			var dt = 0;
 			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 5000 );
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 );
 			var mouseX = 0, mouseY = 0, halfWinX = window.innerWidth / 2; halfWinY = window.innerHeight / 2;
 			var renderer = new THREE.WebGLRenderer();
 			var	clock = new THREE.Clock();
@@ -21,6 +22,7 @@
 			document.body.appendChild( renderer.domElement );
 			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
+			var sky = new Skybox(scene);
 			var ParticleSystems = new ParticleSystems(scene);
 
 			camera.position.z = 100;
