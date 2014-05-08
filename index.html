@@ -105,7 +105,7 @@
 		<script>
 			var dt = 0;
 			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000000 );
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 50000 );
 			var mouseX = 0, mouseY = 0, halfWinX = window.innerWidth / 2; halfWinY = window.innerHeight / 2;
 			var renderer = new THREE.WebGLRenderer();
 			renderer.shadowMapEnabled = true;
@@ -140,7 +140,7 @@
 				}
 			}
 
-			for (var j = 5; j < 50; j++)
+			for (var j = 5; j < 24 ; j++)
 			{
 				var spacing = 1000 * (j+1);
 				for(var i = 0; i < 5; i++)
@@ -159,8 +159,7 @@
 			var hemi = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.01);
 			scene.add(hemi);
 
-			var ZOOM = 2000;
-			camera.position.z = ZOOM;
+			camera.position.z = 2000;
 			camera.position.y = 500000;
 
 
@@ -173,21 +172,22 @@
 			function onDocumentMouseWheel( event ){
 				if (event.deltaY < 0)
 				{
-					ZOOM *= 0.95;
-				} else 
-				{
-					ZOOM *= 1.05;
+					camera.position.z *= 0.95;
+				} else {
+					if (camera.position.z < 20000) camera.position.z *= 1.05;
 				}
 			} 
 
 			function render() {
 				ParticleSystems.update();
-				camera.position.x += ( mouseX - camera.position.x ) * .05;
+				camera.position.x += ( mouseX - camera.position.x - camera.position.z) * .05;
 				camera.position.y += ( - mouseY - camera.position.y ) * .05;
 				if (camera.position.y < 0) camera.position.y = 0;
-				camera.position.z = ZOOM;
+				if (camera.position.z > 30000) {
+					camera.position.z = 30000;
+				}
 				camera.lookAt( scene.position );
-				hemi.intensity = (ZOOM/4000000);
+				hemi.intensity = (camera.position.z/4000000);
 
 				requestAnimationFrame(render);
 				renderer.render(scene, camera);
