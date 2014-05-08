@@ -108,6 +108,17 @@
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000000 );
 			var mouseX = 0, mouseY = 0, halfWinX = window.innerWidth / 2; halfWinY = window.innerHeight / 2;
 			var renderer = new THREE.WebGLRenderer();
+			renderer.shadowMapEnabled = true;
+			renderer.shadowMapSoft = true;
+
+			renderer.shadowCameraNear = 3;
+			renderer.shadowCameraFar = camera.far;
+			renderer.shadowCameraFov = 50;
+
+			renderer.shadowMapBias = 0.0039;
+			renderer.shadowMapDarkness = 0.5;
+			renderer.shadowMapWidth = 1024;
+			renderer.shadowMapHeight = 1024;
 			var	clock = new THREE.Clock();
 
 			renderer.setSize( window.innerWidth, window.innerHeight );
@@ -119,20 +130,38 @@
 			var ground = new Ground(scene);
 			var base = new fireBase(scene);
 			var ParticleSystems = new ParticleSystems(scene);
-				var tree = new Tree( scene, Math.random() * 10000, Math.random() * 10000 );
+			for (var j = 0; j < 5; j++)
+			{
+				var spacing = 1000 * (j+1);
+				for(var i = 0; i < 3; i++)
+				{
+					var randum = ((Math.random() * (2*Math.PI)) - Math.PI);
+					var tree = new Tree( scene, Math.sin(randum)*spacing,Math.cos(randum) * spacing, true); //( Math.random() * (1000.0) - 400.0), ( Math.random() * (1000.0) - 400.0), true /*casts a shadow*/);
+				}
+			}
 
+			for (var j = 5; j < 50; j++)
+			{
+				var spacing = 1000 * (j+1);
+				for(var i = 0; i < 5; i++)
+				{
+					var randum = ((Math.random() * (2*Math.PI)) - Math.PI);
+					var tree = new Tree( scene, Math.sin(randum)*spacing,Math.cos(randum) * spacing, false); //( Math.random() * (1000.0) - 400.0), ( Math.random() * (1000.0) - 400.0), true /*casts a shadow*/);
+				}
+			}
 			var ambience = new THREE.AmbientLight(0x101010);
 			scene.add(ambience);
 
-			var pointLight = new THREE.PointLight(0xffffff, 2, 100);
-			pointLight.position.set(0, 10, 0);
-			scene.add(pointLight);
+			var pointlight = new THREE.PointLight(0xffffff, 0.5, 70);
+			pointlight.position.set(0, 1, 0);
+			//scene.add(pointlight);
 
 			var hemi = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.01);
 			scene.add(hemi);
 
 			var ZOOM = 2000;
 			camera.position.z = ZOOM;
+			camera.position.y = 500000;
 
 
 			function onDocumentMouseMove( event ) {

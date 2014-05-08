@@ -105,6 +105,31 @@ function ParticleSystems(scene) {
 	// Add the particle group to the scene so it can be drawn.
 	scene.add( particleGroup.mesh );
 
+	var spotlight = new THREE.SpotLight( 0xffffff, 0.4 );
+	spotlight.position.set( 0, 0, 0 );
+	spotlight.target.position.set(100,40,0);
+	spotlight.castShadow = true;
+	scene.add( spotlight );
+	spotlight = new THREE.SpotLight( 0xffffff, 0.4 );
+	spotlight.position.set( 0, 0, 0 );
+	spotlight.target.position.set(-100,40,0);
+	spotlight.castShadow = true;
+	scene.add( spotlight );
+	spotlight = new THREE.SpotLight( 0xffffff, 0.4 );
+	spotlight.position.set( 0, 0, 0 );
+	spotlight.target.position.set(0,40,100);
+	spotlight.castShadow = true;
+	scene.add( spotlight );
+	spotlight = new THREE.SpotLight( 0xffffff, 0.4 );
+	spotlight.position.set( 0, 0, 0 );
+	spotlight.target.position.set(0,40,-100);
+	spotlight.castShadow = true;
+	scene.add( spotlight );
+	spotlight = new THREE.SpotLight( 0xffffff, 0.1 );
+	spotlight.position.set( 0, 200, 0 );
+	spotlight.target.position.set(0,0,0);
+	spotlight.castShadow = true;
+	scene.add( spotlight );
 
 	this.update = function() {
 		particleGroup.tick( clock.getDelta() );

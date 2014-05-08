@@ -7,6 +7,7 @@ function Ground(scene)
 	var gr = new THREE.Mesh( geometry, grmaterial );
 	gr.position.y = -45;
 	gr.rotation.x = Math.PI / 2;
+	gr.receiveShadow = true;
 
 	scene.add( gr );
 }
