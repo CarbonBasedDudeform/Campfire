@@ -38,8 +38,8 @@
 
 			{
 			    vec3 p = position;
-			    p.x *= rand;
-			    p.z *= rand;
+			    p.z = p.z + sin(p.y*6.28)*10.0;
+			    //p.z *= sin(rand);
 			    vUv.x = rand;
 			    vUv.y = p.y;
 			    vec4 mvPosition = modelViewMatrix * vec4(scale * p, 1.0 );
@@ -91,6 +91,52 @@
 			}
         </script>
 
+        <script id="tree-fs" type="x-shader/x-fragment">
+            #ifdef GL_ES
+			precision highp float;
+			#endif
+			uniform float alpha;
+			varying vec2 vUv;      
+
+			void main(void)
+			{
+			    vec2 position = vUv;
+
+			    float red = 0.1;// * (vUv.x -1.0);
+			    float green = 0.1;// * (vUv.x -1.0);
+			    float blue = 0.0;
+			    green *= (abs(vUv.y)/450.0) + 0.25;
+				red *= (abs(vUv.y)/450.0) + 0.6;
+
+			    vec3 rgb = vec3(red, green, blue);
+				vec4 color = vec4(rgb, alpha);
+
+			    gl_FragColor = color;
+
+			}
+        </script>
+
+        <script id="tree-vs" type="x-shader/x-vertex">
+			varying vec2 vUv;
+			uniform float scale;
+			uniform float alpha;
+
+			attribute float rand;  
+			void main()
+
+			{
+			    vec3 p = position;
+			    
+			    vUv.x = rand;
+			    vUv.y = p.y;
+			    p.zx *= (1.0 - (p.y/400.0));// + 1.0;
+
+			    vec4 mvPosition = modelViewMatrix * vec4(scale * p, 1.0 );
+			    gl_Position = projectionMatrix * mvPosition;
+
+			}
+        </script>
+
 	</head>
 	<body>
 		<script src="js/three.js"></script>
@@ -109,16 +155,16 @@
 			var mouseX = 0, mouseY = 0, halfWinX = window.innerWidth / 2; halfWinY = window.innerHeight / 2;
 			var renderer = new THREE.WebGLRenderer();
 			renderer.shadowMapEnabled = true;
-			renderer.shadowMapSoft = true;
+			renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
 			renderer.shadowCameraNear = 3;
 			renderer.shadowCameraFar = camera.far;
-			renderer.shadowCameraFov = 50;
+			renderer.shadowCameraFov = 5000;
 
-			renderer.shadowMapBias = 0.0039;
-			renderer.shadowMapDarkness = 0.5;
-			renderer.shadowMapWidth = 1024;
-			renderer.shadowMapHeight = 1024;
+			renderer.shadowMapBias = 0.039;
+			renderer.shadowMapDarkness = 0.25;
+			renderer.shadowMapWidth = 2048;
+			renderer.shadowMapHeight = 2048;
 			var	clock = new THREE.Clock();
 
 			renderer.setSize( window.innerWidth, window.innerHeight );
@@ -154,7 +200,7 @@
 
 			var pointlight = new THREE.PointLight(0xffffff, 0.5, 70);
 			pointlight.position.set(0, 1, 0);
-			//scene.add(pointlight);
+			scene.add(pointlight);
 
 			var hemi = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.01);
 			scene.add(hemi);

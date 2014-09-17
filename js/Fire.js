@@ -105,31 +105,27 @@ function ParticleSystems(scene) {
 	// Add the particle group to the scene so it can be drawn.
 	scene.add( particleGroup.mesh );
 
-	var spotlight = new THREE.SpotLight( 0xffffff, 0.4 );
-	spotlight.position.set( 0, 0, 0 );
-	spotlight.target.position.set(100,40,0);
-	spotlight.castShadow = true;
-	scene.add( spotlight );
-	spotlight = new THREE.SpotLight( 0xffffff, 0.4 );
-	spotlight.position.set( 0, 0, 0 );
-	spotlight.target.position.set(-100,40,0);
-	spotlight.castShadow = true;
-	scene.add( spotlight );
-	spotlight = new THREE.SpotLight( 0xffffff, 0.4 );
-	spotlight.position.set( 0, 0, 0 );
-	spotlight.target.position.set(0,40,100);
-	spotlight.castShadow = true;
-	scene.add( spotlight );
-	spotlight = new THREE.SpotLight( 0xffffff, 0.4 );
-	spotlight.position.set( 0, 0, 0 );
-	spotlight.target.position.set(0,40,-100);
-	spotlight.castShadow = true;
-	scene.add( spotlight );
-	spotlight = new THREE.SpotLight( 0xffffff, 0.1 );
-	spotlight.position.set( 0, 200, 0 );
-	spotlight.target.position.set(0,0,0);
-	spotlight.castShadow = true;
-	scene.add( spotlight );
+	function addSpotLight(x, z) {
+		var spotlight = new THREE.SpotLight( 0xffffff, 0.8 );
+			spotlight.position.set( 0, 0, 0 );
+			spotlight.target.position.set(x,40,z);
+			spotlight.castShadow = true;
+			spotlight.shadowMapWidth = 1024;
+			spotlight.shadowCameraVisible = true;
+			scene.add( spotlight );
+	}
+
+	addSpotLight(100, 0);
+	addSpotLight(-100, 0);
+	addSpotLight(0, 100);
+	addSpotLight(0, -100);
+
+	var above_spotlight = new THREE.SpotLight( 0xffffff, 0.8 );
+	above_spotlight.position.set( 0, 800, 0 );
+	above_spotlight.castShadow = true;
+	above_spotlight.shadowMapWidth = 1024;
+	above_spotlight.shadowCameraVisible = true;
+	scene.add( above_spotlight );
 
 	this.update = function() {
 		particleGroup.tick( clock.getDelta() );
