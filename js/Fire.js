@@ -111,7 +111,7 @@ function ParticleSystems(scene) {
 			spotlight.target.position.set(x,40,z);
 			spotlight.castShadow = true;
 			spotlight.shadowMapWidth = 1024;
-			spotlight.shadowCameraVisible = true;
+			//spotlight.shadowCameraVisible = true;
 			scene.add( spotlight );
 	}
 
@@ -120,11 +120,11 @@ function ParticleSystems(scene) {
 	addSpotLight(0, 100);
 	addSpotLight(0, -100);
 
-	var above_spotlight = new THREE.SpotLight( 0xffffff, 0.8 );
+	var above_spotlight = new THREE.SpotLight( 0xffffff, 0.2 );
 	above_spotlight.position.set( 0, 800, 0 );
 	above_spotlight.castShadow = true;
 	above_spotlight.shadowMapWidth = 1024;
-	above_spotlight.shadowCameraVisible = true;
+	//above_spotlight.shadowCameraVisible = true;
 	scene.add( above_spotlight );
 
 	this.update = function() {
