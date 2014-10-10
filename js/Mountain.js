@@ -94,7 +94,7 @@ function Mountain(scene, x, y, z, height, depth, width)
 		midLeft.divideScalar(2);
 
 		var error = -5 + Math.random()*_height*(depth/startDepth);
-		//the offset applies to the central point in the patch and is the mean of the height of the four corners plus an error, which is a random amount in a given range
+		//the offset applies to the central point in the patch and is the mean of the height of the four corners and the centre plus an error, which is a random amount in a given range
 		var offset = (vertices[0].y + vertices[2].y + vertices[5].y + vertices[8].y + vertices[4].y) / 5;
 			offset += error;
 
