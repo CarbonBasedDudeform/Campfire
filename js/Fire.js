@@ -106,7 +106,7 @@ function ParticleSystems(scene) {
 	scene.add( particleGroup.mesh );
 
 	function addSpotLight(x, z) {
-		var spotlight = new THREE.SpotLight( 0xffffff, 0.8 );
+		var spotlight = new THREE.SpotLight( 0xffffff, 0.1 );
 			spotlight.position.set( 0, 0, 0 );
 			spotlight.target.position.set(x,40,z);
 			spotlight.castShadow = true;

@@ -16,7 +16,7 @@ function Mountain(scene, x, y, z, height, depth, width)
 	_vertices.push(new THREE.Vector3(x-width, _yOffset, z-depth));
 
 	_vertices.push(new THREE.Vector3(x-width, _yOffset, z-depth));	
-	_vertices.push(new THREE.Vector3(x, _yOffset, z));
+	_vertices.push(new THREE.Vector3(x, _yOffset+70000, z));
 	_vertices.push(new THREE.Vector3(x-width, _yOffset, z+depth));
 
 	_vertices.push(new THREE.Vector3(x+width, _yOffset, z-depth));	
@@ -95,7 +95,7 @@ function Mountain(scene, x, y, z, height, depth, width)
 
 		var error = -5 + Math.random()*_height*(depth/startDepth);
 		//the offset applies to the central point in the patch and is the mean of the height of the four corners plus an error, which is a random amount in a given range
-		var offset = (vertices[0].y + vertices[2].y + vertices[5].y + vertices[8].y) / 4;
+		var offset = (vertices[0].y + vertices[2].y + vertices[5].y + vertices[8].y + vertices[4].y) / 5;
 			offset += error;
 
 		var centralPoint = vertices[1];

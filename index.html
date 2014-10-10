@@ -188,15 +188,6 @@
 				}
 			}
 
-			for (var j = 5; j < 24 ; j++)
-			{
-				var spacing = 1000 * (j+1);
-				for(var i = 0; i < 5; i++)
-				{
-					var randum = ((Math.random() * (2*Math.PI)) - Math.PI);
-					var tree = new Tree( scene, Math.sin(randum)*spacing,Math.cos(randum) * spacing, false); //( Math.random() * (1000.0) - 400.0), ( Math.random() * (1000.0) - 400.0), true /*casts a shadow*/);
-				}
-			}
 			var ambience = new THREE.AmbientLight(0x101010);
 			scene.add(ambience);
 
