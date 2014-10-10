@@ -1,4 +1,4 @@
-function Ground(scene)
+function Ground(scene, x, y, z, size)
 {
 	//for now generate a flat green plane
 	var groundTexture = new THREE.ImageUtils.loadTexture( 'img/grass.jpg' );
@@ -7,23 +7,23 @@ function Ground(scene)
 	var _yOffset = -35;
 
 	_vertices = new Array();
-	_vertices.push(new THREE.Vector3(-30000, _yOffset, -30000));
-	_vertices.push(new THREE.Vector3(0, _yOffset, 0));
-	_vertices.push(new THREE.Vector3(30000, _yOffset, -30000));
+	_vertices.push(new THREE.Vector3(x-size, _yOffset, z-size));
+	_vertices.push(new THREE.Vector3(x, _yOffset, z));
+	_vertices.push(new THREE.Vector3(x+size, _yOffset, z-size));
 
-	_vertices.push(new THREE.Vector3(-30000, _yOffset, 30000));
-	_vertices.push(new THREE.Vector3(0, _yOffset, 0));
-	_vertices.push(new THREE.Vector3(-30000, _yOffset, -30000));
+	_vertices.push(new THREE.Vector3(x-size, _yOffset, z+size));
+	_vertices.push(new THREE.Vector3(x, _yOffset, z));
+	_vertices.push(new THREE.Vector3(x-size, _yOffset, z-size));
 
-	_vertices.push(new THREE.Vector3(30000, _yOffset, 30000));
-	_vertices.push(new THREE.Vector3(0, _yOffset, 0));
-	_vertices.push(new THREE.Vector3(30000, _yOffset, -30000));
+	_vertices.push(new THREE.Vector3(x+size, _yOffset, z+size));
+	_vertices.push(new THREE.Vector3(x, _yOffset, z));
+	_vertices.push(new THREE.Vector3(x+size, _yOffset, z-size));
 
-	_vertices.push(new THREE.Vector3(30000, _yOffset, 30000));
-	_vertices.push(new THREE.Vector3(0, _yOffset, 0));
-	_vertices.push(new THREE.Vector3(-30000, _yOffset, 30000));
+	_vertices.push(new THREE.Vector3(x+size, _yOffset, z+size));
+	_vertices.push(new THREE.Vector3(x, _yOffset, z));
+	_vertices.push(new THREE.Vector3(x-size, _yOffset, z+size));
 
-	geometry.vertices = diamond_square_generate(_vertices,9);
+	geometry.vertices = diamond_square_generate(_vertices,6);
 
 	//add the faces by breaking down the number of vertices into groups of three for each triangle
 	for (var i = 0; i < geometry.vertices.length; i += 3) {
@@ -41,23 +41,24 @@ function Ground(scene)
 
 	function diamond_square_generate(vertices, depth) {
 		var offset;
-		var c = 15;
+		var c = 150;
 		for (var i = 0; i < depth; i++) {
 			var newVerts = new Array();
 			var newen = new THREE.Vector3();
-			var centreOfTheUnivsere = new THREE.Vector3(0,-45,0);
 			//triangles are made up going in a clockwise manner
 			//so by convention we know the second vertex of the triangle, v+1, will be the centre one
-			offset = Math.random() * c * i;
+			offset = Math.random() * c;
 			for (var v = 0; v < vertices.length; v += 3) {
 				newen = new THREE.Vector3();
 
 				newen.addVectors(vertices[v], vertices[v+2]);
 				newen.divideScalar(2);
-				console.log(((vertices[v+1].distanceTo(centreOfTheUnivsere))));
-				vertices[v+1].y -= offset;
-				newen.y -= offset;
-				
+				//skip the first one so that the fire isn't floating
+				if (i > 0) {
+					vertices[v+1].y -= offset;
+					newen.y -= offset;
+				}
+
 				newVerts.push(vertices[v+1]);
 				newVerts.push(newen);
 				newVerts.push(vertices[v]);

@@ -147,11 +147,12 @@
 		<script src="js/Skybox.js"></script>
 		<script src="js/fireBase.js"></script>
 		<script src="js/Ground.js"></script>
+		<script src="js/Mountain.js"></script>
 		<script src="js/Tree.js"></script>
 		<script>
 			var dt = 0;
 			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 50000 );
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 100000 );
 			var mouseX = 0, mouseY = 0, halfWinX = window.innerWidth / 2; halfWinY = window.innerHeight / 2;
 			var renderer = new THREE.WebGLRenderer();
 			renderer.shadowMapEnabled = true;
@@ -173,7 +174,8 @@
 			document.addEventListener( 'wheel', onDocumentMouseWheel, false);
 
 			var sky = new Skybox(scene);
-			var ground = new Ground(scene);
+			var ground = new Ground(scene, 0, 0, 0, 30000);
+			var mountain = new Mountain(scene,/*x,y,z*/ 0, 0, -15000, /*height*/ 4000, /*depth*/5000, /*width*/ 20000);
 			var base = new fireBase(scene);
 			var ParticleSystems = new ParticleSystems(scene);
 			for (var j = 0; j < 5; j++)
@@ -212,7 +214,7 @@
 			function onDocumentMouseMove( event ) {
 
 				mouseX = event.clientX - halfWinX;
-				mouseY = event.clientY - halfWinY;
+				mouseY = event.clientY - halfWinY*3;
 			}
 
 			function onDocumentMouseWheel( event ){
@@ -227,7 +229,7 @@
 			function render() {
 				ParticleSystems.update();
 				camera.position.x += ( mouseX - camera.position.x - camera.position.z) * .05;
-				camera.position.y += ( - mouseY - camera.position.y ) * .05;
+				camera.position.y += ( - mouseY - camera.position.y ) * .1;
 				if (camera.position.y < 0) camera.position.y = 0;
 				if (camera.position.z > 30000) {
 					camera.position.z = 30000;
