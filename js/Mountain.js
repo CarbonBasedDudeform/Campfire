@@ -16,7 +16,7 @@ function Mountain(scene, x, y, z, height, depth, width)
 	_vertices.push(new THREE.Vector3(x-width, _yOffset, z-depth));
 
 	_vertices.push(new THREE.Vector3(x-width, _yOffset, z-depth));	
-	_vertices.push(new THREE.Vector3(x, _yOffset+70000, z));
+	_vertices.push(new THREE.Vector3(x, _yOffset+110000, z));
 	_vertices.push(new THREE.Vector3(x-width, _yOffset, z+depth));
 
 	_vertices.push(new THREE.Vector3(x+width, _yOffset, z-depth));	
